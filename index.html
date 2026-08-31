@@ -125,7 +125,7 @@
         
         let snake, d, food, score, gameInterval;
         let changeDirectionQueue = []; 
-        let isGameRunning = false; // متغير منطقي للتحكم في حالة بداية اللعبة
+        let isGameRunning = false;
 
 
         initGame();
@@ -138,7 +138,7 @@
                 {x: 7 * boxSize, y: 10 * boxSize}
             ];
             
-            d = ""; // لا يوجد اتجاه مبدئي ليبقى الثعبان ثابتاً
+            d = ""; 
             score = 0;
             scoreElement.innerText = score;
             changeDirectionQueue = [];
@@ -147,7 +147,7 @@
             gameOverScreen.style.display = "none";
             
             generateFood();
-            drawGameFrame(); // رسم الإطار الأول الثابت للثعبان والطعام
+            drawGameFrame();
         }
 
         
@@ -179,7 +179,7 @@
 
             valid
             if (!isGameRunning && (key === 37 || key === 38 || key === 39 || key === 40)) {
-                // منع التحرك للخلف فوراً عند البداية (لأن الثعبان ممدد لليمين، فلا يجوز البدء لليسار)
+                
                 if (key === 37) return; 
 
                 isGameRunning = true;
