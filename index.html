@@ -127,10 +127,10 @@
         let changeDirectionQueue = []; 
         let isGameRunning = false; // متغير منطقي للتحكم في حالة بداية اللعبة
 
-        // تجهيز اللعبة في وضع الانتظار لأول مرة
+
         initGame();
 
-        // دالة إعداد الحالة الابتدائية الثابتة للعبة
+        
         function initGame() {
             snake = [
                 {x: 9 * boxSize, y: 10 * boxSize},
@@ -150,13 +150,13 @@
             drawGameFrame(); // رسم الإطار الأول الثابت للثعبان والطعام
         }
 
-        // دالة إعادة التشغيل بعد الخسارة تضع اللعبة في وضع الانتظار أيضاً
+        
         function resetGame() {
             if (gameInterval) clearInterval(gameInterval);
             initGame();
         }
 
-        // توليد طعام في مكان عشوائي نظيف
+        
         function generateFood() {
             let validLocation = false;
             while (!validLocation) {
@@ -168,28 +168,28 @@
             }
         }
 
-        // الاستماع لمدخلات لوحة المفاتيح
+        
         document.addEventListener("keydown", direction);
 
         function direction(event) {
             let key = event.keyCode;
             
-            // قراءة الاتجاه الحالي بدقة من الطابور
+            
             let currentDir = changeDirectionQueue.length > 0 ? changeDirectionQueue[changeDirectionQueue.length - 1] : d;
 
-            // إذا كانت اللعبة في وضع الانتظار وضغط المستخدم سهم توجيه valid
+            valid
             if (!isGameRunning && (key === 37 || key === 38 || key === 39 || key === 40)) {
                 // منع التحرك للخلف فوراً عند البداية (لأن الثعبان ممدد لليمين، فلا يجوز البدء لليسار)
                 if (key === 37) return; 
 
                 isGameRunning = true;
-                hintText.innerText = "[]! ركز جيداً.";
+                hintText.innerText = "[]! .";
                 
-                // تشغيل المؤقت الزمني بانتظام لتحديث الإطارات
+                
                 gameInterval = setInterval(update, 100); 
             }
 
-            // إدارة الأسهم ومنع الحركة الانتحارية العكسية أثناء اللعب
+            
             if (key === 37 && currentDir !== "RIGHT") changeDirectionQueue.push("LEFT");
             else if (key === 38 && currentDir !== "DOWN") changeDirectionQueue.push("UP");
             else if (key === 39 && currentDir !== "LEFT") changeDirectionQueue.push("RIGHT");
@@ -205,13 +205,13 @@
             return false;
         }
 
-        // دالة الرسم الأساسية المشتركة
+        
         function drawGameFrame() {
-            // تنظيف مساحة الرسم
+            
             ctx.fillStyle = "#111";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // رسم الثعبان
+            
             for (let i = 0; i < snake.length; i++) {
                 ctx.fillStyle = (i === 0) ? "#4CAF50" : "#81C784";
                 ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
@@ -219,14 +219,14 @@
                 ctx.strokeRect(snake[i].x, snake[i].y, boxSize, boxSize);
             }
 
-            // رسم الطعام
+            
             ctx.fillStyle = "#FF5722";
             ctx.beginPath();
             ctx.arc(food.x + boxSize/2, food.y + boxSize/2, boxSize/2 - 2, 0, 2 * Math.PI);
             ctx.fill();
         }
 
-        // الدالة المسؤولة عن تحديث منطق الحركة (المحرك)
+        
         function update() {
             if (changeDirectionQueue.length > 0) {
                 d = changeDirectionQueue.shift();
@@ -242,7 +242,7 @@
 
             let newHead = { x: snakeX, y: snakeY };
 
-            // فحص شروط الخسارة
+            
             if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || checkCollision(newHead, snake)) {
                 clearInterval(gameInterval);
                 gameOverScreen.style.display = "flex";
@@ -250,7 +250,7 @@
                 return;
             }
 
-            // منطق الأكل والنمو
+            
             if (snakeX === food.x && snakeY === food.y) {
                 score++;
                 scoreElement.innerText = score;
@@ -261,7 +261,7 @@
 
             snake.unshift(newHead);
             
-            // إعادة رسم الكوادر بعد التحديث
+           
             drawGameFrame();
         }
     </script>
